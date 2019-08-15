@@ -1,0 +1,5 @@
+shell.c - entry method, show prompt, get input from user
+args.c - handle arguments
+get_command.c - find and execute the command if its found. Else, show error.
+variables.c - special shell variables.
+builtins.c - exit function
