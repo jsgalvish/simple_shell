@@ -4,8 +4,10 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
-int _putchar(char c);
-void _get_input(int characters);
+int _putstr(char *str);
+void _get_input(int input);
+void _process_input( char *buffer);
 
 #endif
