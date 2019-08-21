@@ -1,31 +1,66 @@
 #include "shell.h"
 /**
- * _putchar - writes the character c to stdout
- * @c: The character to print
- *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * _putstr - writes a string to stdout
+ * @str: The string to print
+ * Return: size of string or -1.
  */
-int _putchar(char c)
+int _putstr(char *str)
 {
-	return (write(1, &c, 1));
+	int size = -1, len = 0;
+
+	while (str[len] != '\0')
+		len++;
+
+	size = write(1, str, len);
+
+	if (len == size)
+		return (size);
+
+	/*error*/
+	return (size);
 }
 
 /**
 * _get_input - manage input
 **/
 
-void _get_input(int characters)
+void _get_input(int input)
 {
 	char buffer[32];
 	char *b = buffer;
 	int bufsize = 32;
 
-	_putchar('$');
-	characters = _getline(&b,&bufsize,stdin);
+	_putstr("$");
+	input = getline(&b,&bufsize,stdin);
 
-	if (characters)
-		_get_input(characters);
+	if (input)
+	{
+		_process_input(buffer);
+		_get_input(input);
+	}
 
 	exit(98);
+}
+
+/**
+*
+**/
+
+void _process_input(char *buffer)
+{
+	if(buffer[0] == '/')
+	{
+		if(access(buffer, X_OK))
+		{
+			pid_t pid;
+			int status;
+			pid = fork();
+
+			if (pid == 0)
+			{
+				if (execve(buffer, NULL, NULL) == -1)
+					perror("Could not execve");
+			}
+		}
+	}
 }
