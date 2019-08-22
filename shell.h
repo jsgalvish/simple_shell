@@ -8,6 +8,7 @@
 
 int _putstr(char *str);
 void _get_input(int input);
+int _execute(char *buffer);
 void _process_input( char *buffer);
 
 #endif
