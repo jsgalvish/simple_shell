@@ -49,8 +49,6 @@ void _get_input(int input)
 
 int _execute(char *buffer)
 {
-	int status;
-
 	if (buffer[0] == '/')
 	{
 		if (access(buffer, X_OK))
@@ -64,15 +62,16 @@ int _execute(char *buffer)
 
 void _process_input(char *buffer)
 {
+	int status;
+	char *nbuffer = strtok(buffer, "\n");
+	char *argv[] = {nbuffer, NULL};
+	char *envp[] = {NULL};
+
 	pid_t pid;
 	pid = fork();
 
 	if (pid == 0)
 	{
-		char *nbuffer = strtok(buffer, "\n");
-		char *argv[] = {nbuffer, NULL};
-		char *envp[] = {NULL};
-
 		if (execve(buffer, argv, envp) == -1)
 			perror("Could not execve");
 		exit(0);
