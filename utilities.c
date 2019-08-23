@@ -49,10 +49,22 @@ void _get_input(int input)
 
 int _execute(char *buffer)
 {
-	if (buffer[0] == '/')
+	int i = 0;
+	char *token;
+	char *store_tokens[1024];
+
+	token = strtok(buffer, " \n\t\r");
+	store_tokens[i++] = token;
+
+	while ((token = strtok(NULL, " \n\t\r")))
+		store_tokens[i++] = token;
+
+	store_tokens[i] = NULL;
+
+	if (store_tokens[0][0] == 47)
 	{
-		if (access(buffer, X_OK))
-			_process_input(buffer);
+		if (access(store_tokens[0], X_OK))
+			_process_input(store_tokens);
 
 		return (1);
 	}
@@ -60,19 +72,18 @@ int _execute(char *buffer)
 	return (0);
 }
 
-void _process_input(char *buffer)
+void _process_input(char *argv[])
 {
 	int status;
-	char *nbuffer = strtok(buffer, "\n");
-	char *argv[] = {nbuffer, NULL};
 	char *envp[] = {NULL};
 
 	pid_t pid;
 	pid = fork();
 
+
 	if (pid == 0)
 	{
-		if (execve(buffer, argv, envp) == -1)
+		if (execve(argv[0], argv, envp) == -1)
 			perror("Could not execve");
 		exit(0);
 	}
