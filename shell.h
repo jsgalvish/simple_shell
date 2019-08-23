@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <string.h>
 
 int _putstr(char *str);
@@ -15,5 +16,7 @@ int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
 void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
+int _execute(char *buffer);
+void _process_input( char *buffer);
 
 #endif
