@@ -18,5 +18,6 @@ void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
 int _execute(char *buffer);
 void _process_input( char *buffer);
+void print_env();
 
 #endif
