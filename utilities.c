@@ -28,9 +28,9 @@ char **_tokenizer(char *buffer, char *delimiter)
 {
 	int i = 0;
 	char *token;
-	char **store_tokens;
+	char **store_tokens = NULL;
 
-	store_tokens = malloc(sizeof(char *) * 32 );
+	store_tokens = malloc(sizeof(char *) * 64 );
 
 	token = strtok(buffer, delimiter);
 	store_tokens[i++] = token;

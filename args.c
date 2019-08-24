@@ -41,7 +41,7 @@ char *_prompt()
 
 void _execute(char *buffer, char *env[])
 {
-	char **argv;
+	char **argv = NULL;
 	argv =  _tokenizer(buffer, " \n\t\r");
 
 	if (argv[0][0] == 47)
@@ -82,28 +82,31 @@ void _process_input(char *argv[], char *env[])
 
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), *check;
+	char *path = _path(env), *check = NULL, *cpath = NULL;
 	struct stat buf;
+	int i = 0;
+	char **routes = NULL;
 
 	if (path != NULL)
 	{
-		char **routes;
-		int i = 0;
-
-		routes = _tokenizer(path, ":");
-		routes[i] = _strcpy(&routes[i][5]);
+		cpath = _strcpy(path);
+		routes = _tokenizer(cpath, ":");
+		routes[0] = _strcpy(&routes[0][5]);
 
 		while (routes[i])
 		{
-			check = _strcat(routes[i++],argv[0]);
+			check = _strcat(routes[i],argv[0]);
+
 			if ( stat( check, &buf ) == 0)
 			{
 				argv[0] = check;
+				free(check);
 				return (1);
 			}
+			i++;
 		}
 	}
-
+	free(routes);
 	return (0);
 }
 
