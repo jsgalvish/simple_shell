@@ -37,10 +37,10 @@ void _get_input(int input)
 	_putstr(YELLOW ">> " RESET);
 	input = getline(&b, &bufsize, stdin);
 
-	if (input)
+	if (strtok(b," \n\t\r"))
 		_get_input(_execute(b));
 
-	exit(98);
+	_get_input(input);
 }
 
 /**
