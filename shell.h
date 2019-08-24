@@ -26,8 +26,8 @@ char *_path(char **env);
 char *_strcat(char *a, char *b);
 int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
-void *_memset(char *s, int c, size_t n);
-void free_double(void **ptr, int i);
-
+int _execute(char *buffer);
+void _process_input( char *buffer);
+int _strcmp(char *s1, char *s2);
 
 #endif
