@@ -1,6 +1,11 @@
 #include "shell.h"
 
-int main()
+int main(int argc, char **argv, char **environment)
 {
-	_get_input(1);
+	printf("%d\n", argc);
+	puts(argv[0]);
+
+	_get_input(environment);
+
+	return(0);
 }

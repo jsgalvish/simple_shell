@@ -5,13 +5,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <string.h>
 
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define RESET "\x1B[0m"
+
+void _get_input(char *env[]);
+char *_prompt();
 int _putstr(char *str);
-void _get_input(int input);
-void _process_input(char *buffer);
+char *_strcpy(char *original);
+void _execute(char *buffer, char *env[]);
+char **_tokenizer(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
+void _process_input(char *argv[], char *env[]);
+int check_path(char *argv[], char *env[]);
+char *_path(char **env);
+char *_strcat(char *a, char *b);
 int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
 int _execute(char *buffer);

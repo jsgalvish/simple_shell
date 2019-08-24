@@ -24,64 +24,61 @@ int _putstr(char *str)
 	return (size);
 }
 
-/**
-* _get_input - manage input
-**/
-
-void _get_input(int input)
+char **_tokenizer(char *buffer, char *delimiter)
 {
-	char *b = NULL;
-	size_t bufsize = 0;
+	int i = 0;
+	char *token;
+	char **store_tokens = NULL;
 
-	_putstr(GREEN "[._.] ");
-	_putstr(YELLOW ">> " RESET);
-	input = getline(&b, &bufsize, stdin);
+	store_tokens = malloc(sizeof(char *) * 64 );
 
-	if (input)
-		_get_input(_execute(b));
+	token = strtok(buffer, delimiter);
+	store_tokens[i++] = token;
 
-	exit(98);
+	while ((token = strtok(NULL, delimiter)))
+		store_tokens[i++] = token;
+
+	store_tokens[i] = NULL;
+
+	return(store_tokens);
 }
 
-/**
-*
-**/
-
-int _execute(char *buffer)
+char *_strcpy(char *original)
 {
-	if (buffer[0] == '/')
-	{
-		if (access(buffer, X_OK))
-			_process_input(buffer);
+	int i = 0;
+	char *copy;
 
-		return (1);
+	copy = malloc(sizeof(original));
+
+	while (original[i] != '\0')
+	{
+		copy[i] = original[i];
+		i++;
 	}
 
-	return (0);
+	copy[i] = '\0';
+
+	return copy;
 }
 
-void _process_input(char *buffer)
+char *_strcat(char *a, char *b)
 {
-	int status;
-	char *nbuffer = strtok(buffer, "\n");
-	char *argv[] = {nbuffer, NULL};
-	char *envp[] = {NULL};
+	char *news;
+	size_t i,j;
 
-	pid_t pid;
-	pid = fork();
+	for (i = 0; a[i] != '\0'; i++)
 
-	if (pid == 0)
-	{
-		if (execve(buffer, argv, envp) == -1)
-			perror("Could not execve");
-		exit(0);
-	}
-	else if (pid < 0)
-		perror("Could not execve");
-	else
-	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
+	for (j = 0; b[j] != '\0'; j++)
+
+	news = malloc((i+j) * sizeof(char) + 2);
+
+	for (i = 0; a[i] != '\0'; i++)
+		news[i] = a[i];
+	news[i] = '/';
+
+	for (j = 1; b[j-1] != '\0'; j++)
+		news[i+j] = b[j-1];
+
+	news[i+j] = '\0';
+	return news;
 }
