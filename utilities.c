@@ -30,14 +30,37 @@ int _putstr(char *str)
 
 void _get_input(int input)
 {
-	char *b = NULL;
+	int i = 0;
+	char *b = NULL, *d = NULL;
 	size_t bufsize = 0;
 
-	_putstr(GREEN "[._.] ");
-	_putstr(YELLOW ">> " RESET);
-	input = getline(&b, &bufsize, stdin);
+	if (!isatty(fileno(stdin)))
+	{
+		input = getline(&b, &bufsize, stdin);
 
-	if (strtok(b," \n\t\r"))
+		if(input == EOF)
+			exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		_putstr(GREEN "[._.] ");
+		_putstr(YELLOW ">> " RESET);
+
+		input = getline(&b, &bufsize, stdin);
+	}
+
+
+	d = malloc(sizeof(b));
+
+	while (b[i] != '\0')
+	{
+    		d[i] = b[i];
+		i++;
+	}
+
+  	d[i] = '\0';
+
+	if (strtok(d," \n\t\r"))
 		_get_input(_execute(b));
 
 	_get_input(input);
@@ -79,7 +102,6 @@ void _process_input(char *argv[])
 
 	pid_t pid;
 	pid = fork();
-
 
 	if (pid == 0)
 	{
