@@ -30,7 +30,7 @@ char **_tokenizer(char *buffer, char *delimiter)
 	char *token;
 	char **store_tokens;
 
-	store_tokens = malloc(sizeof(char *) * 10 );
+	store_tokens = malloc(sizeof(char *) * 32 );
 
 	token = strtok(buffer, delimiter);
 	store_tokens[i++] = token;
@@ -59,4 +59,26 @@ char *_strcpy(char *original)
 	copy[i] = '\0';
 
 	return copy;
+}
+
+char *_strcat(char *a, char *b)
+{
+	char *news;
+	size_t i,j;
+
+	for (i = 0; a[i] != '\0'; i++)
+
+	for (j = 0; b[j] != '\0'; j++)
+
+	news = malloc((i+j) * sizeof(char) + 2);
+
+	for (i = 0; a[i] != '\0'; i++)
+		news[i] = a[i];
+	news[i] = '/';
+
+	for (j = 1; b[j-1] != '\0'; j++)
+		news[i+j] = b[j-1];
+
+	news[i+j] = '\0';
+	return news;
 }

@@ -1,4 +1,4 @@
-#include "shell.c"
+#include "shell.h"
 
 void _get_input(char *env[])
 {
@@ -51,7 +51,7 @@ void _execute(char *buffer, char *env[])
 	}
 	else
 	{
-		if (check_path(argv))
+		if (check_path(argv,env))
 			_process_input(argv,env);
 	}
 	//Error
@@ -80,18 +80,28 @@ void _process_input(char *argv[], char *env[])
 	}
 }
 
-int check_path(char *env[])
+int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env);
+	char *path = _path(env), *check;
+	struct stat buf;
 
 	if (path != NULL)
 	{
 		char **routes;
-		routes = _tokenizer(path, ":");
-
 		int i = 0;
+
+		routes = _tokenizer(path, ":");
+		routes[i] = _strcpy(&routes[i][5]);
+
 		while (routes[i])
-			puts(routes[i++]);
+		{
+			check = _strcat(routes[i++],argv[0]);
+			if ( stat( check, &buf ) == 0)
+			{
+				argv[0] = check;
+				return (1);
+			}
+		}
 	}
 
 	return (0);
