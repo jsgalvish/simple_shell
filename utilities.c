@@ -24,97 +24,36 @@ int _putstr(char *str)
 	return (size);
 }
 
-/**
-* _get_input - manage input
-**/
-
-void _get_input(int input)
-{
-	int i = 0;
-	char *b = NULL, *d = NULL;
-	size_t bufsize = 0;
-
-	if (!isatty(fileno(stdin)))
-	{
-		input = getline(&b, &bufsize, stdin);
-
-		if(input == EOF)
-			exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		_putstr(GREEN "[._.] ");
-		_putstr(YELLOW ">> " RESET);
-
-		input = getline(&b, &bufsize, stdin);
-	}
-
-
-	d = malloc(sizeof(b));
-
-	while (b[i] != '\0')
-	{
-    		d[i] = b[i];
-		i++;
-	}
-
-  	d[i] = '\0';
-
-	if (strtok(d," \n\t\r"))
-		_get_input(_execute(b));
-
-	_get_input(input);
-}
-
-/**
-*
-**/
-
-int _execute(char *buffer)
+char **_tokenizer(char *buffer, char *delimiter)
 {
 	int i = 0;
 	char *token;
 	char *store_tokens[1024];
 
-	token = strtok(buffer, " \n\t\r");
+	token = strtok(buffer, delimiter);
 	store_tokens[i++] = token;
 
-	while ((token = strtok(NULL, " \n\t\r")))
+	while ((token = strtok(NULL, delimiter)))
 		store_tokens[i++] = token;
 
 	store_tokens[i] = NULL;
 
-	if (store_tokens[0][0] == 47)
-	{
-		if (access(store_tokens[0], X_OK) == 0)
-			_process_input(store_tokens);
-
-		return (1);
-	}
-
-	return (0);
+	return(store_tokens);
 }
 
-void _process_input(char *argv[])
+char *_strcpy(char *original)
 {
-	int status;
-	char *envp[] = {NULL};
+	char *copy;
 
-	pid_t pid;
-	pid = fork();
+	copy = malloc(sizeof(original));
 
-	if (pid == 0)
+	while (original[i] != '\0')
 	{
-		if (execve(argv[0], argv, envp) == -1)
-			perror("Could not execve");
-		exit(0);
+		copy[i] = original[i];
+		i++;
 	}
-	else if (pid < 0)
-		perror("Could not execve");
-	else
-	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
+
+	copy[i] = '\0';
+
+	return copy;
 }
