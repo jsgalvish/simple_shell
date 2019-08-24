@@ -2,15 +2,10 @@
 
 int main(int argc, char **argv, char **environment)
 {
-	char *path;
-
 	printf("%d\n", argc);
 	puts(argv[0]);
 
-	path = _path(environment);
-
-	puts(path);
-	_get_input(1, environment);
+	_get_input(environment);
 
 	return(0);
 }

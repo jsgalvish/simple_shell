@@ -8,18 +8,23 @@
 #include <sys/wait.h>
 #include <string.h>
 
+#define GREEN "\x1B[32m"
+#define YELLOW "\x1B[33m"
+#define RESET "\x1B[0m"
+
 void _get_input(char *env[]);
 char *_prompt();
 int _putstr(char *str);
+char *_strcpy(char *original);
 void _execute(char *buffer, char *env[]);
 char **_tokenizer(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
 void _process_input(char *argv[], char *env[]);
+int check_path(char *env[]);
 char *_path(char **env);
 int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
 void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
-
 
 #endif

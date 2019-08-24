@@ -18,6 +18,7 @@ void _get_input(char *env[])
 
 char *_prompt()
 {
+	int input;
 	char *buffer = NULL;
 	size_t bufsize = 0;
 
@@ -40,8 +41,8 @@ char *_prompt()
 
 void _execute(char *buffer, char *env[])
 {
-	char *argv[];
-	argv = _tokenizer(buffer, " \n\t\r");
+	char **argv;
+	argv =  _tokenizer(buffer, " \n\t\r");
 
 	if (argv[0][0] == 47)
 	{
@@ -79,17 +80,19 @@ void _process_input(char *argv[], char *env[])
 	}
 }
 
-int check_path(char* path, char *argv[])
+int check_path(char *env[])
 {
+	char *path = _path(env);
+
 	if (path != NULL)
 	{
-		char *routes[];
+		char **routes;
 		routes = _tokenizer(path, ":");
 
 		int i = 0;
 		while (routes[i])
-			puts(store_tokens[i++]);
+			puts(routes[i++]);
 	}
 
-	return(0);
+	return (0);
 }
