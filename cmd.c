@@ -25,7 +25,7 @@ char *_next()
 	if (!isatty(fileno(stdin)))
 	{
 		input = getline(&buffer, &bufsize, stdin);
-		if(input == EOF)
+		if (input == -1)
 			exit(EXIT_SUCCESS);
 	}
 	else
@@ -39,7 +39,7 @@ char *_next()
 	return (buffer);
 }
 
-void show_prompt()
+void show_prompt(void)
 {
 		_putstr(GREEN "[._.] ");
 		_putstr(YELLOW ">> " RESET);
@@ -48,19 +48,19 @@ void show_prompt()
 void _execute(char *buffer, char *env[])
 {
 	char **argv = NULL;
-	argv =  _tokenizer(buffer, " \n\t\r");
+
+	argv = _tokenizer(buffer, " \n\t\r");
 
 	if (argv[0][0] == 47)
 	{
 		if (access(argv[0], X_OK) == 0)
-			_process_input(argv,env);
+			_process_input(argv, env);
 	}
 	else
 	{
-		if (check_path(argv,env))
-			_process_input(argv,env);
+		if (check_path(argv, env))
+			_process_input(argv, env);
 	}
-	//Error
 }
 
 void _process_input(char *argv[], char *env[])
@@ -86,54 +86,3 @@ void _process_input(char *argv[], char *env[])
 	}
 }
 
-int check_path(char *argv[], char *env[])
-{
-	char *path = _path(env), *check = NULL, *cpath = NULL;
-	struct stat buf;
-	int i = 0;
-	char **routes = NULL;
-
-	if (path != NULL)
-	{
-		cpath = _strcpy(path);
-		routes = _tokenizer(cpath, ":");
-		routes[0] = _strcpy(&routes[0][5]);
-
-		while (routes[i])
-		{
-			check = _strcat(routes[i],argv[0]);
-
-			if ( stat( check, &buf ) == 0)
-			{
-				argv[0] = check;
-				free(check);
-				return (1);
-			}
-			i++;
-		}
-	}
-	free(routes);
-	return (0);
-}
-
-char *_path(char **env)
-{
-	int i=0, j=0;
-	char *path = "PATH=";
-
-	while(env[i])
-	{
-		j = 0;
-		while(j<5)
-		{
-			if (env[i][j] != path[j])
-				break;
-			j++;
-		}
-		if ( j == 5)
-			break;
-		i++;
-	}
-
-	return (env[i]);
-}
