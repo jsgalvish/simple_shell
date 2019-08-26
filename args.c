@@ -1,5 +1,21 @@
 #include "shell.h"
 
+void _get_input(char *env[])
+{
+	char *buffer = NULL, *c_buffer = NULL;
+
+	buffer = _prompt();
+
+	c_buffer = _strcpy(buffer);
+
+	if (strtok(c_buffer," \n\t\r"))
+	{
+		_execute(buffer,env);
+		_get_input(env);
+	}
+	_get_input(env);
+}
+
 char *_prompt()
 {
 	int input;
@@ -23,22 +39,63 @@ char *_prompt()
 	return (buffer);
 }
 
+void _execute(char *buffer, char *env[])
+{
+	char **argv = NULL;
+	argv =  _tokenizer(buffer, " \n\t\r");
+
+	if (argv[0][0] == 47)
+	{
+		if (access(argv[0], X_OK) == 0)
+			_process_input(argv,env);
+	}
+	else
+	{
+		if (check_path(argv,env))
+			_process_input(argv,env);
+	}
+	//Error
+}
+
+void _process_input(char *argv[], char *env[])
+{
+	int status;
+
+	pid_t pid;
+	pid = fork();
+
+	if (pid == 0)
+	{
+		if (execve(argv[0], argv, env) == -1)
+			perror("Could not execve");
+		exit(0);
+	}
+	else if (pid < 0)
+		perror("Could not execve");
+	else
+	{
+		do {
+			waitpid(pid, &status, WUNTRACED);
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+}
+
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), *check = NULL;
+	char *path = _path(env), *check = NULL, *cpath = NULL;
 	struct stat buf;
 	int i = 0;
 	char **routes = NULL;
 
 	if (path != NULL)
 	{
-		routes = _tokenizer(path, ":");
+		cpath = _strcpy(path);
+		routes = _tokenizer(cpath, ":");
 		routes[0] = _strcpy(&routes[0][5]);
 
 		while (routes[i])
 		{
 			check = _strcat(routes[i],argv[0]);
-			printf("check %s\n", check);
 
 			if ( stat( check, &buf ) == 0)
 			{

@@ -27,38 +27,18 @@ int _putstr(char *str)
 char **_tokenizer(char *buffer, char *delimiter)
 {
 	int i = 0;
-	char *token = NULL;
+	char *token;
 	char **store_tokens = NULL;
-	char *copy = malloc(sizeof(char *) * _strlen(buffer));
 
-	printf("[tokenizer] buffer: %s\n", buffer );
-	printf("[tokenizer] delimiter: %s\n", delimiter );
+	store_tokens = malloc(sizeof(char *) * 64 );
 
-	printf("[tokenizer] _strcpy: %s\n", _strcpy(buffer) );
-
-	copy = _strcpy(buffer);
-
-	store_tokens = malloc(sizeof(char *) * 8 );
-	if (store_tokens == NULL)
-	{
-		perror("Fatal Error");
-		return (NULL);
-	}
-
-	printf("[tokenizer] copy: %s\n", copy );
-	token = strtok(copy, delimiter);
-	printf("[tokenizer] token: %s\n", delimiter );
+	token = strtok(buffer, delimiter);
 	store_tokens[i++] = token;
 
-	while ((token = strtok(0, delimiter)))
-	{
-		printf("[tokenizer] token: %s\n", token );
+	while ((token = strtok(NULL, delimiter)))
 		store_tokens[i++] = token;
-	}
 
 	store_tokens[i] = NULL;
-
-	printf("[tokenizer] buffer: %s\n", buffer );
 
 	return(store_tokens);
 }
@@ -66,14 +46,9 @@ char **_tokenizer(char *buffer, char *delimiter)
 char *_strcpy(char *original)
 {
 	int i = 0;
-	char *copy = NULL;
+	char *copy;
 
-	copy = malloc(sizeof(original) + 1);
-	if (copy == NULL)
-	{
-		perror("Fatal Error");
-		return (NULL);
-	}
+	copy = malloc(sizeof(original));
 
 	while (original[i] != '\0')
 	{
@@ -83,8 +58,6 @@ char *_strcpy(char *original)
 
 	copy[i] = '\0';
 
-	printf("[strcpy] copy     size %li %s  \n", sizeof(copy), copy);
-	printf("[strcpy] original %li %s  \n", sizeof(original), original);
 	return copy;
 }
 
@@ -108,14 +81,4 @@ char *_strcat(char *a, char *b)
 
 	news[i+j] = '\0';
 	return news;
-}
-
-int _strlen (char *str)
-{
-	int i = 0;
-
-	while (str[i] != '\0')
-		i++;
-
-	return ++i;
 }
