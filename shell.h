@@ -28,6 +28,8 @@ int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
 void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
-
+char *_next();
+void show_prompt(void);
+int _strlen (char *str);
 
 #endif
