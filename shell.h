@@ -31,5 +31,6 @@ char *_next(void);
 void show_prompt(void);
 int _strlen(char *s);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_memcpy(char *dest, char *src, unsigned int n);
 
 #endif

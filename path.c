@@ -2,26 +2,30 @@
 
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), check[98];
+	char *path = _path(env), *check = NULL, *cpath = NULL;
 	struct stat buf;
 	int i = 0;
 	char **routes = NULL;
 
 	if (path != NULL)
 	{
-		routes = _tokenize(path, ":");
+		cpath = malloc(sizeof(*cpath) * _strlen(path));
+		_strcpy(cpath, path);
+		routes = _tokenize(cpath, ":");
 
 		while (routes[i])
 		{
-			_strcpy(check,routes[i]);
+			check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
+					+ (sizeof(*check) * _strlen(argv[0])));
+			_strcpy(check, routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
-
-			if (stat( check, &buf ) == 0)
+			if (stat(check, &buf ) == 0)
 			{
 				argv[0] = check;
 				return (1);
 			}
+			_memset(check, 0, _strlen(check));
 			i++;
 		}
 	}

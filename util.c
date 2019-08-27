@@ -138,13 +138,33 @@ void *expand(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (ptr);
 
 	new = malloc(new_size);
-	if (new == NULL)
+	if (new)
+	{
+		_memcpy(new, ptr, old_size);
+		free(ptr);
+	}
+	else
 	{
 		free(new);
 		return (NULL);
 	}
-	else
-		free(ptr);
 
 	return (new);
+}
+
+/**
+ * _memcpy - copies the n bytes of a memory area to a destination
+ * @dest: pointer to the destination
+ * @src: source
+ * @n: amount of bytes to fill
+ * Return: pointer to the modified memory area
+ */
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	int i;
+
+	for (i = 0; i < (int)n; i++)
+		dest[i] = src[i];
+
+	return (dest);
 }

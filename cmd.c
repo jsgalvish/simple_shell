@@ -3,11 +3,12 @@
 void _get_input(char *env[])
 {
 	char *buffer = NULL;
-	char cbuffer[98];
+	char *cbuffer = NULL;
 
 	buffer = _next();
 
-	_strcpy(cbuffer,buffer);
+	cbuffer = malloc(sizeof(*buffer) * _strlen(buffer));
+	_strcpy(cbuffer, buffer);
 
 	if (strtok(cbuffer, " \n\t\r"))
 	{
