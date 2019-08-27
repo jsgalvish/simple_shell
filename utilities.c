@@ -24,15 +24,17 @@ int _putstr(char *str)
 	return (size);
 }
 
-char **_tokenizer(char *buffer, char *delimiter)
+char **_tokenize(char *buffer, char *delimiter)
 {
 	int i = 0;
-	char *token;
+	char *token, cbuffer[98];
 	char **store_tokens = NULL;
+
+	_strcpy(cbuffer,buffer);
 
 	store_tokens = malloc(sizeof(char *) * tc(buffer, delimiter) + 8);
 
-	token = strtok(buffer, delimiter);
+	token = strtok(cbuffer, delimiter);
 	store_tokens[i] = token;
 
 	while ((token = strtok(NULL, delimiter)))

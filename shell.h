@@ -17,7 +17,7 @@ void _get_input(char *env[]);
 int _putstr(char *str);
 char *_strcpy(char *dest, char *src);
 void _execute(char *buffer, char *env[]);
-char **_tokenizer(char *buffer, char *delimiter);
+char **_tokenize(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
 void _process_input(char *argv[], char *env[]);
 int check_path(char *argv[], char *env[]);

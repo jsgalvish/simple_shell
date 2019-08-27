@@ -2,13 +2,14 @@
 
 void _get_input(char *env[])
 {
-	char *buffer = NULL, *c_buffer = NULL;
+	char *buffer = NULL;
+	char cbuffer[98];
 
 	buffer = _next();
 
-	c_buffer = _strcpy(buffer);
+	_strcpy(cbuffer,buffer);
 
-	if (strtok(c_buffer, " \n\t\r"))
+	if (strtok(cbuffer, " \n\t\r"))
 	{
 		_execute(buffer, env);
 		_get_input(env);
@@ -49,7 +50,7 @@ void _execute(char *buffer, char *env[])
 {
 	char **argv = NULL;
 
-	argv = _tokenizer(buffer, " \n\t\r");
+	argv = _tokenize(buffer, " \n\t\r");
 
 	if (argv[0][0] == 47)
 	{

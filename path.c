@@ -2,27 +2,24 @@
 
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), check[98], *cpath = NULL;
+	char *path = _path(env), check[98];
 	struct stat buf;
 	int i = 0;
 	char **routes = NULL;
 
 	if (path != NULL)
 	{
-		cpath = _strcpy(path);
-		routes = _tokenize(cpath, ":");
+		routes = _tokenize(path, ":");
 
 		while (routes[i])
 		{
-			check = _strcpy(routes[i]);
+			_strcpy(check,routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
-			printf("%s\n", check);
 
 			if (stat( check, &buf ) == 0)
 			{
 				argv[0] = check;
-				free(check);
 				return (1);
 			}
 			i++;
