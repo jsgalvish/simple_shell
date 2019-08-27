@@ -16,7 +16,7 @@ void _get_input(char *env[])
 	_get_input(env);
 }
 
-char *_next()
+char *_next(void)
 {
 	int input;
 	char *buffer = NULL;

@@ -121,4 +121,30 @@ void free_double(void **ptr, int i)
 	free(ptr);
 }
 
+void *expand(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	void *new;
 
+	if (new_size == old_size)
+		return (ptr);
+
+	if (new_size == 0 && ptr != NULL)
+	{
+		free(ptr);
+		return (NULL);
+	}
+
+	if (new_size == 0)
+		return (ptr);
+
+	new = malloc(new_size);
+	if (new == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+	else
+		free(ptr);
+
+	return (new);
+}

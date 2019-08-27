@@ -14,9 +14,8 @@
 #define RESET "\x1B[0m"
 
 void _get_input(char *env[]);
-char *_prompt();
 int _putstr(char *str);
-char *_strcpy(char *original);
+char *_strcpy(char *dest, char *src);
 void _execute(char *buffer, char *env[]);
 char **_tokenizer(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
@@ -28,6 +27,9 @@ int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
 void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
-
+char *_next(void);
+void show_prompt(void);
+int _strlen(char *s);
+void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 
 #endif
