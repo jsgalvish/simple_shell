@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/6365358b/
+GREEN	shell.h	/^#define GREEN /;"	d
+GREEN	utilities.c	/^#define GREEN /;"	d	file:
+RESET	shell.h	/^#define RESET /;"	d
+RESET	utilities.c	/^#define RESET /;"	d	file:
+YELLOW	shell.h	/^#define YELLOW /;"	d
+YELLOW	utilities.c	/^#define YELLOW /;"	d	file:
+_execute	cmd.c	/^void _execute(char *buffer, char *env[])$/;"	f	typeref:typename:void
+_get_input	cmd.c	/^void _get_input(char *env[])$/;"	f	typeref:typename:void
+_memcpy	mem_util.c	/^char *_memcpy(char *dest, char *src, unsigned int n)$/;"	f	typeref:typename:char *
+_memset	mem_util.c	/^void *_memset(char *s, int c, size_t n)$/;"	f	typeref:typename:void *
+_next	cmd.c	/^char *_next(void)$/;"	f	typeref:typename:char *
+_path	path.c	/^char *_path(char **env)$/;"	f	typeref:typename:char *
+_process_input	cmd.c	/^void _process_input(char *argv[], char *env[])$/;"	f	typeref:typename:void
+_putstr	strutil_1.c	/^int _putstr(char *str)$/;"	f	typeref:typename:int
+_shell_	shell.h	/^#define _shell_$/;"	d
+_strcat	strutil_1.c	/^char *_strcat(char *dest, char *src)$/;"	f	typeref:typename:char *
+_strcmp	strutil_2.c	/^int _strcmp(char *s1, char *s2)$/;"	f	typeref:typename:int
+_strcpy	strutil_1.c	/^char *_strcpy(char *dest, char *src)$/;"	f	typeref:typename:char *
+_strlen	strutil_1.c	/^int _strlen(char *s)$/;"	f	typeref:typename:int
+_strtok	strutil.c	/^char *_strtok(char *str, char *delim)$/;"	f	typeref:typename:char *
+_strtok	util.c	/^char *_strtok(char *str, char *delim)$/;"	f	typeref:typename:char *
+_tokenize	util.c	/^char **_tokenize(char *buffer, char *delimiter)$/;"	f	typeref:typename:char **
+_tokenize	utilities.c	/^char **_tokenize(char *buffer, char *delimiter)$/;"	f	typeref:typename:char **
+charcmp	strutil_1.c	/^int charcmp(char c, char *cmp)$/;"	f	typeref:typename:int
+check_path	path.c	/^int check_path(char *argv[], char *env[])$/;"	f	typeref:typename:int
+ec	arrutil.c	/^int ec(void **ptr)$/;"	f	typeref:typename:int
+expand	mem_util.c	/^void *expand(void *ptr, unsigned int old_size, unsigned int new_size)$/;"	f	typeref:typename:void *
+free_double	mem_util.c	/^void free_double(void **ptr, int i)$/;"	f	typeref:typename:void
+main	shell.c	/^int main(int argc __attribute__((unused)), $/;"	f	typeref:typename:int
+show_prompt	cmd.c	/^void show_prompt(void)$/;"	f	typeref:typename:void
+simple_shell	README.md	/^# simple_shell$/;"	c
+tc	util.c	/^int tc(char *str, char *delim)$/;"	f	typeref:typename:int

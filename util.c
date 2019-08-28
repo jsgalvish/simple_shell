@@ -19,99 +19,69 @@ int tc(char *str, char *delim)
 	return (c);
 }
 
-/**
- * charcmp - compares a provided character with each one provided in a charset.
- * @c: provided character
- * @cmp: charset for comparison
- *
- * Return: if the character matches with the charset, the function will
- * return 1. Else, the function will return 0.
- */
-int charcmp(char c, char *cmp)
+char **_tokenize(char *buffer, char *delimiter)
 {
-	int i;
+	int i = 0;
+	char *token, *cbuffer;
+	char **store_tokens = NULL;
 
-	for (i = 0; cmp[i]; i++)
-		if (c == cmp[i])
-			return (1);
-	return (0);
+	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
+	_strcpy(cbuffer, buffer);
+
+	store_tokens = malloc(sizeof(char *) * tc(buffer, delimiter) + 8);
+
+	token = strtok(cbuffer, delimiter);
+
+	store_tokens[i] = token;
+	while ((token = strtok(NULL, delimiter)))
+		store_tokens[++i] = token;
+
+	store_tokens[++i] = NULL;
+
+	return(store_tokens);
 }
 
 /**
- * _memset - fills memory n times with a constant byte.
- * @s: pointer to the memory area
- * @c: specified byte
- * @n: amount of bytes to fill
+ * _strtok - returns the next token of a string, delimited with a
+ * provided set of characters
+ * @str: provided string
+ * @delim: character set for delimiters
  *
- * Return: pointer to the modified memory
+ * Return: pointer to the next token (word), if there are no tokens left, the
+ * function will return a null pointer.
  */
-void *_memset(char *s, int c, size_t n)
+char *_strtok(char *str, char *delim)
 {
-	unsigned int i;
+	int i, len;
+	static char *token;
+	static char *cpy;
+	static int pos;
 
-	for (i = 0; i < n; i++)
-		s[i] = c;
-	return (s);
-}
-
-/**
- * free_double - frees a malloc'd double pointer from a specified position
- * @ptr: double pointer
- * @i: position
- *
- * Return: void.
- */
-void free_double(void **ptr, int i)
-{
-	for (; i >= 0; i--)
-		free(ptr[i]);
-	free(ptr);
-}
-
-void *expand(void *ptr, unsigned int old_size, unsigned int new_size)
-{
-	void *new;
-
-	if (new_size == old_size)
-		return (ptr);
-
-	if (new_size == 0 && ptr != NULL)
-	{
-		free(ptr);
+	if (!str && !cpy)
 		return (NULL);
-	}
 
-	if (new_size == 0)
-		return (ptr);
+	if (str && cpy)
+		pos = 0;
 
-	new = malloc(new_size);
-	if (new)
+	if (!cpy || !token)
 	{
-		_memcpy(new, ptr, old_size);
-		free(ptr);
-	}
-	else
-	{
-		free(new);
-		return (NULL);
+		cpy = str;
+		pos = 0;
 	}
 
-	return (new);
+	for (i = pos, len = 0; cpy[i]; i++)
+	{
+		if (!charcmp(cpy[i], delim))
+			len++;
+		if (!charcmp(cpy[i], delim) && (charcmp(cpy[i + 1], delim) || !cpy[i + 1]))
+		{
+			token = &cpy[(i + 1) - len];
+			token[len] = 0;
+			pos = i + 2;
+			return (token);
+		}
+	}
+	token = NULL;
+	return (token);
 }
 
-/**
- * _memcpy - copies the n bytes of a memory area to a destination
- * @dest: pointer to the destination
- * @src: source
- * @n: amount of bytes to fill
- * Return: pointer to the modified memory area
- */
-char *_memcpy(char *dest, char *src, unsigned int n)
-{
-	int i;
-
-	for (i = 0; i < (int)n; i++)
-		dest[i] = src[i];
-
-	return (dest);
-}
