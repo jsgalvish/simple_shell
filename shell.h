@@ -25,6 +25,7 @@ char *_path(char **env);
 char *_strcat(char *a, char *b);
 int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
+int ec(void **ptr);
 void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
 char *_next(void);
@@ -32,5 +33,7 @@ void show_prompt(void);
 int _strlen(char *s);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
+void signal_handle(int sig);
+
 
 #endif

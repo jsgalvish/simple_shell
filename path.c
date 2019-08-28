@@ -29,7 +29,7 @@ int check_path(char *argv[], char *env[])
 			i++;
 		}
 	}
-	free(routes);
+	free_double((void **) routes, ec((void **) routes));
 	return (0);
 }
 

@@ -2,17 +2,12 @@
 
 void _get_input(char *env[])
 {
-	char *buffer = NULL;
-	char *cbuffer = NULL;
+	char *buffer = _next();
 
-	buffer = _next();
-
-	cbuffer = malloc(sizeof(*buffer) * _strlen(buffer));
-	_strcpy(cbuffer, buffer);
-
-	if (strtok(cbuffer, " \n\t\r"))
+	if (strtok(buffer, " \n\t\r"))
 	{
 		_execute(buffer, env);
+		free(buffer);
 		_get_input(env);
 	}
 	_get_input(env);
@@ -28,14 +23,20 @@ char *_next(void)
 	{
 		input = getline(&buffer, &bufsize, stdin);
 		if (input == -1)
+		{
+			free(buffer);
 			exit(EXIT_SUCCESS);
+		}
 	}
 	else
 	{
 		show_prompt();
 		input = getline(&buffer, &bufsize, stdin);
 		if (input == -1)
+		{
+			free(buffer);
 			exit(EXIT_SUCCESS);
+		}
 	}
 
 	return (buffer);
@@ -63,6 +64,7 @@ void _execute(char *buffer, char *env[])
 		if (check_path(argv, env))
 			_process_input(argv, env);
 	}
+	free_double((void **) argv, ec((void **) argv));
 }
 
 void _process_input(char *argv[], char *env[])
