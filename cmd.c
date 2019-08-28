@@ -48,26 +48,13 @@ char *_next(void)
 	char *buffer = NULL;
 	size_t bufsize = 0;
 
-	if (!isatty(fileno(stdin)))
+	show_prompt();
+	signal(SIGINT, ctrl_c);
+	input = getline(&buffer, &bufsize, stdin);
+	if (input == EOF)
 	{
-		signal(SIGINT, ctrl_c);
-		input = getline(&buffer, &bufsize, stdin);
-		if (input == EOF)
-		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
-		}
-	}
-	else
-	{
-		show_prompt();
-		signal(SIGINT, ctrl_c);
-		input = getline(&buffer, &bufsize, stdin);
-		if (input == EOF)
-		{
-			free(buffer);
-			exit(EXIT_SUCCESS);
-		}
+		free(buffer);
+		exit(EXIT_SUCCESS);
 	}
 
 	return (buffer);
@@ -87,21 +74,13 @@ void _validate(char *buffer, char *env[])
 	argv = _tokenize(buffer, " \n\t\r");
 	free(buffer);
 
-	if (argv[0][0] == 47)
+	if (check_for_builtins(argv, env) == NULL)
 	{
-		if (access(argv[0], X_OK) == 0)
+		if (check_path(argv, env))
 			_execute(argv, env);
 		else
 		{
-			_putstr(argv[0]);
-			_putstr(": command not found\n");
-		}
-	}
-	else
-	{
-		if (check_for_builtins(argv, env) == NULL)
-		{
-			if (check_path(argv, env))
+			if (access(argv[0], X_OK) == 0)	
 				_execute(argv, env);
 			else
 			{
@@ -109,8 +88,8 @@ void _validate(char *buffer, char *env[])
 				_putstr(": command not found\n");
 			}
 		}
+		free_double((void **) argv, ec((void **) argv));
 	}
-	free_double((void **) argv, ec((void **) argv));
 }
 
 /**

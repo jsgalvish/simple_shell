@@ -7,6 +7,9 @@
  */
 void show_prompt(void)
 {
-	_putstr(GREEN "[._.] ");
-	_putstr(YELLOW ">> " RESET);
+	if (isatty(STDIN_FILENO))
+	{
+		_putstr(GREEN "[._.] ");
+		_putstr(YELLOW ">> " RESET);
+	}
 }

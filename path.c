@@ -69,6 +69,6 @@ char *_path(char **env)
 			break;
 		i++;
 	}
-
 	return (&env[i][j]);
 }
+
