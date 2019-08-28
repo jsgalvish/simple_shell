@@ -14,11 +14,10 @@
 #define RESET "\x1B[0m"
 
 void _get_input(char *env[]);
-char *_prompt();
 int _putstr(char *str);
-char *_strcpy(char *original);
+char *_strcpy(char *dest, char *src);
 void _execute(char *buffer, char *env[]);
-char **_tokenizer(char *buffer, char *delimiter);
+char **_tokenize(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
 void _process_input(char *argv[], char *env[]);
 int check_path(char *argv[], char *env[]);
@@ -26,8 +25,15 @@ char *_path(char **env);
 char *_strcat(char *a, char *b);
 int charcmp(char c, char *cmp);
 int tc(char *str, char *delim);
-int _execute(char *buffer);
-void _process_input( char *buffer);
+int ec(void **ptr);
+void *_memset(char *s, int c, size_t n);
+void free_double(void **ptr, int i);
+char *_next(void);
+void show_prompt(void);
+int _strlen(char *s);
+void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_memcpy(char *dest, char *src, unsigned int n);
+void signal_handle(int sig);
 int _strcmp(char *s1, char *s2);
 
 #endif

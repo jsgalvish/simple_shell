@@ -24,61 +24,74 @@ int _putstr(char *str)
 	return (size);
 }
 
-char **_tokenizer(char *buffer, char *delimiter)
+char **_tokenize(char *buffer, char *delimiter)
 {
 	int i = 0;
-	char *token;
+	char *token, *cbuffer;
 	char **store_tokens = NULL;
 
-	store_tokens = malloc(sizeof(char *) * 64 );
+	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
+	_strcpy(cbuffer, buffer);
 
-	token = strtok(buffer, delimiter);
-	store_tokens[i++] = token;
+	store_tokens = malloc(sizeof(char *) * tc(buffer, delimiter) + 8);
 
+	token = strtok(cbuffer, delimiter);
+
+	store_tokens[i] = token;
 	while ((token = strtok(NULL, delimiter)))
-		store_tokens[i++] = token;
+		store_tokens[++i] = token;
 
-	store_tokens[i] = NULL;
+	store_tokens[++i] = NULL;
 
 	return(store_tokens);
 }
 
-char *_strcpy(char *original)
+char *_strcpy(char *dest, char *src)
 {
-	int i = 0;
-	char *copy;
+	int i;
 
-	copy = malloc(sizeof(original));
+	if (*src == '\0')
+		*dest = '\0';
 
-	while (original[i] != '\0')
-	{
-		copy[i] = original[i];
-		i++;
-	}
+	for (i = 0; *(src + i) != '\0'; i++)
+		*(dest + i) = *(src + i);
 
-	copy[i] = '\0';
+	if (*(src + i) == '\0')
+		*(dest + i) = '\0';
 
-	return copy;
+	return (dest);
 }
 
-char *_strcat(char *a, char *b)
+char *_strcat(char *dest, char *src)
 {
-	char *news;
-	size_t i,j;
+	int i, j;
+	char *str;
 
-	for (i = 0; a[i] != '\0'; i++)
+	str = dest;
 
-	for (j = 0; b[j] != '\0'; j++)
+	for (i = 0; dest[i] != '\0'; i++)
+		;
 
-	news = malloc((i+j) * sizeof(char) + 2);
+	for (j = 0; src[j] != '\0'; j++, i++)
+		str[i] = src[j];
 
-	for (i = 0; a[i] != '\0'; i++)
-		news[i] = a[i];
-	news[i] = '/';
+	str[i] = '\0';
 
-	for (j = 1; b[j-1] != '\0'; j++)
-		news[i+j] = b[j-1];
+	return (str);
+}
 
-	news[i+j] = '\0';
-	return news;
+/**
+ * _strlen - returns the length of a string
+ * @s: pointer to the string
+ * Return: i, length of the string
+ */
+int _strlen(char *s)
+{
+	int i;
+
+	i = 0;
+	for (; s[i] != '\0'; i++)
+		;
+	return (i);
+
 }
