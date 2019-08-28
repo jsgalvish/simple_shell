@@ -16,8 +16,8 @@
 void _get_input(char *env[]);
 char *_next(void);
 void show_prompt(void);
-void _execute(char *buffer, char *env[]);
-void _process_input(char *argv[], char *env[]);
+void _validate(char *buffer, char *env[]);
+void _execute(char *argv[], char *env[]);
 
 int tc(char *str, char *delim);
 char **_tokenize(char *buffer, char *delimiter);
