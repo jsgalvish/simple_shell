@@ -87,12 +87,15 @@ void _validate(char *buffer, char *env[])
 	}
 	else
 	{
-		if (check_path(argv, env))
-			_execute(argv, env);
-		else
+		if (check_for_builtins(argv[0])==NULL)
 		{
-			_putstr(argv[0]);
-			_putstr(": command not found\n");
+			if (check_path(argv, env))
+				_execute(argv, env);
+			else
+			{
+				_putstr(argv[0]);
+				_putstr(": command not found\n");
+			}
 		}
 	}
 	free(argv);

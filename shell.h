@@ -13,6 +13,12 @@
 #define YELLOW "\x1B[33m"
 #define RESET "\x1B[0m"
 
+typedef struct builtins
+{
+	char *name;
+	void (*f)(void);
+} builtins_t;
+
 void _get_input(char *env[]);
 char *_next(void);
 void show_prompt(void);
@@ -39,5 +45,8 @@ void *_memset(char *s, int c, size_t n);
 void free_double(void **ptr, int i);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
+
+void (*check_for_builtins(char* str))(void);
+void n_exit(void);
 
 #endif
