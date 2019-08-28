@@ -87,7 +87,7 @@ void _validate(char *buffer, char *env[])
 	}
 	else
 	{
-		if (check_for_builtins(argv[0])==NULL)
+		if (check_for_builtins(argv[0],env)==NULL)
 		{
 			if (check_path(argv, env))
 				_execute(argv, env);

@@ -16,7 +16,7 @@
 typedef struct builtins
 {
 	char *name;
-	void (*f)(void);
+	void (*f)(char *env[]);
 } builtins_t;
 
 void _get_input(char *env[]);
@@ -46,7 +46,8 @@ void free_double(void **ptr, int i);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
 
-void (*check_for_builtins(char* str))(void);
-void n_exit(void);
+void (*check_for_builtins(char* str, char *env[]))(char *env[]);
+void n_exit(char *env[]);
+void _env(char *env[]);
 
 #endif
