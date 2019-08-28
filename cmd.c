@@ -8,7 +8,7 @@
  */
 void _get_input(char *env[])
 {
-	char *buffer = _next(), cbuffer = NULL;
+	char *buffer = _next(), *cbuffer = NULL;
 
 	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer));
 	_strcpy(cbuffer,buffer);
