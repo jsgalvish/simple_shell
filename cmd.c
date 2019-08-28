@@ -10,8 +10,8 @@ void _get_input(char *env[])
 {
 	char *buffer = _next(), *cbuffer = NULL;
 
-	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer));
-	_strcpy(cbuffer,buffer);
+	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
+	_strcpy(cbuffer, buffer);
 
 	if (strtok(cbuffer, " \n\t\r"))
 	{
@@ -87,7 +87,7 @@ void _validate(char *buffer, char *env[])
 	}
 	else
 	{
-		if (check_for_builtins(argv[0],env)==NULL)
+		if (check_for_builtins(argv[0], env) == NULL)
 		{
 			if (check_path(argv, env))
 				_execute(argv, env);
@@ -99,7 +99,6 @@ void _validate(char *buffer, char *env[])
 		}
 	}
 	free(argv);
-	//free_double((void **) argv, ec((void **) argv));
 }
 
 /**

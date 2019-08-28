@@ -1,12 +1,13 @@
-#include "shell.h"
+ #include "shell.h"
 
 /**
  * check_for_builtins - checks if the command is a builtin
  * @str: built for check
+ * @env: current enviroment
  * Return: pointer to the function or NULL
  */
 
-void (*check_for_builtins(char* str, char *env[]))(char *env[])
+void (*check_for_builtins(char *str, char *env[]))(char *env[])
 {
 	int i;
 
@@ -31,6 +32,7 @@ void (*check_for_builtins(char* str, char *env[]))(char *env[])
 
 /**
 * n_exit - exit shell
+* @env: current enviroment
 */
 
 void n_exit(char *env[])
@@ -42,13 +44,14 @@ void n_exit(char *env[])
 
 /**
 * _env - prints enviroment
+* @env: current enviroment
 */
 
 void _env(char *env[])
 {
 	int i = 0;
 
-	while(env[i])
+	while (env[i])
 	{
 		_putstr(env[i]);
 		_putstr("\n");
