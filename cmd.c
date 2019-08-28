@@ -80,7 +80,7 @@ void _validate(char *buffer, char *env[])
 			_execute(argv, env);
 		else
 		{
-			if (access(argv[0], X_OK) == 0)	
+			if (access(argv[0], X_OK) == 0)
 				_execute(argv, env);
 			else
 			{

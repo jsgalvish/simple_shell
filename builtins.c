@@ -2,7 +2,7 @@
 
 /**
  * check_for_builtins - checks if the command is a builtin
- * @str: built for check
+ * @argv: arguments
  * @env: current enviroment
  * Return: pointer to the function or NULL
  */
@@ -36,11 +36,9 @@ void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
 * @env: current enviroment
 */
 
-void n_exit(char *env[])
+void n_exit(char *env[] __attribute__((unused)))
 {
-	if (env)
-
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 /**
