@@ -37,7 +37,10 @@ int check_path(char *argv[], char *env[])
 			i++;
 		}
 	}
-	free_double((void **) routes, ec((void **) routes));
+
+	free(routes);
+
+	//free_double((void **) routes, ec((void **) routes));
 	return (0);
 }
 
