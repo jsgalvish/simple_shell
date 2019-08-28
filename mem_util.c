@@ -31,6 +31,14 @@ void free_double(void **ptr, int i)
 	free(ptr);
 }
 
+/**
+ * expand - reallocates memory for a pointer
+ * @ptr: pointer
+ * @old_size: old size of the pointer
+ * @new_size: new size for the pointer
+ *
+ * Return: pointer to the newly allocated memory address.
+ */
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	void *new;

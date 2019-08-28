@@ -22,7 +22,11 @@ int _putstr(char *str)
 }
 
 /**
+ * _strcpy - copies a string
+ * @dest: destination string
+ * @src: source string
  *
+ * Return: pointer to destination.
  */
 char *_strcpy(char *dest, char *src)
 {
@@ -40,6 +44,13 @@ char *_strcpy(char *dest, char *src)
 	return (dest);
 }
 
+/**
+ * _strcat - concatenates two strings
+ * @dest: destination string
+ * @src: source string
+ *
+ * Return: pointer to the concatenated string.
+ */
 char *_strcat(char *dest, char *src)
 {
 	int i, j;

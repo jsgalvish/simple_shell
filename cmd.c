@@ -1,18 +1,29 @@
 #include "shell.h"
 
+/**
+ * _get_input - gets input from stdin.
+ * @env: environment
+ *
+ * Return: void.
+ */
 void _get_input(char *env[])
 {
 	char *buffer = _next();
 
 	if (strtok(buffer, " \n\t\r"))
 	{
-		_execute(buffer, env);
+		_validate(buffer, env);
 		free(buffer);
 		_get_input(env);
 	}
 	_get_input(env);
 }
 
+/**
+ * _next - gets input through getline and returns the associated buffer
+ *
+ * Return: void.
+ */
 char *_next(void)
 {
 	int input;
@@ -42,13 +53,25 @@ char *_next(void)
 	return (buffer);
 }
 
+/**
+ * show_prompt - shows the prompt.
+ *
+ * Return: void.
+ */
 void show_prompt(void)
 {
-		_putstr(GREEN "[._.] ");
-		_putstr(YELLOW ">> " RESET);
+	_putstr(GREEN "[._.] ");
+	_putstr(YELLOW ">> " RESET);
 }
 
-void _execute(char *buffer, char *env[])
+/**
+ * _validate - validates input from _next
+ * @buffer: buffer containing the command
+ * @env: environment
+ *
+ * Return: void.
+ */
+void _validate(char *buffer, char *env[])
 {
 	char **argv = NULL;
 
@@ -57,17 +80,24 @@ void _execute(char *buffer, char *env[])
 	if (argv[0][0] == 47)
 	{
 		if (access(argv[0], X_OK) == 0)
-			_process_input(argv, env);
+			_execute(argv, env);
 	}
 	else
 	{
 		if (check_path(argv, env))
-			_process_input(argv, env);
+			_execute(argv, env);
 	}
 	free_double((void **) argv, ec((void **) argv));
 }
 
-void _process_input(char *argv[], char *env[])
+/**
+ * _execute - executes a command
+ * @argv: arguments
+ * @env: environment
+ *
+ * Return: void.
+ */
+void _execute(char *argv[], char *env[])
 {
 	int status;
 	pid_t pid;
