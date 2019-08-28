@@ -10,7 +10,7 @@ void _get_input(char *env[])
 {
 	char *buffer = _next(), *cbuffer = NULL;
 
-	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer));
+	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
 	_strcpy(cbuffer,buffer);
 
 	if (strtok(cbuffer, " \n\t\r"))

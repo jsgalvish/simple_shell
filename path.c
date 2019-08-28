@@ -17,30 +17,32 @@ int check_path(char *argv[], char *env[])
 
 	if (path != NULL)
 	{
-		cpath = malloc(sizeof(*cpath) * _strlen(path));
+		cpath = malloc(sizeof(*cpath) * _strlen(path) + 1);
 		_strcpy(cpath, path);
 		routes = _tokenize(cpath, ":");
 
+		check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
+				+ (sizeof(*check) * _strlen(argv[0]) + 2));
+
 		while (routes[i])
 		{
-			check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
-					+ (sizeof(*check) * _strlen(argv[0])));
 			_strcpy(check, routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
 			if (stat(check, &buf) == 0)
 			{
 				argv[0] = check;
+				free_double((void **) routes, ec((void **) routes));
 				return (1);
 			}
 			_memset(check, 0, _strlen(check));
 			i++;
+			if (routes[i])
+				check = expand(check, sizeof(check), (sizeof(*check) * _strlen(routes[i]))
+						+ (sizeof(*check) * _strlen(argv[0]) + 2));
 		}
 	}
-
-	free(routes);
-
-	//free_double((void **) routes, ec((void **) routes));
+	free_double((void **) routes, ec((void **) routes));
 	return (0);
 }
 
