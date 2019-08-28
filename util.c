@@ -19,6 +19,13 @@ int tc(char *str, char *delim)
 	return (c);
 }
 
+/**
+ * _tokenize - tokenizes a string
+ * @buffer: string
+ * @delimiter: charset for the delimiter
+ *
+ * Return: double pointer with every token
+ */
 char **_tokenize(char *buffer, char *delimiter)
 {
 	int i = 0;
@@ -38,7 +45,7 @@ char **_tokenize(char *buffer, char *delimiter)
 
 	store_tokens[++i] = NULL;
 
-	return(store_tokens);
+	return (store_tokens);
 }
 
 /**
