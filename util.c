@@ -49,7 +49,6 @@ char **_tokenize(char *buffer, char *delimiter)
 	}
 
 	store_tokens[++i] = NULL;
-	
 	free(cbuffer);
 	return (store_tokens);
 }
@@ -97,4 +96,3 @@ char *_strtok(char *str, char *delim)
 	token = NULL;
 	return (token);
 }
-
