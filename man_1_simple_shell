@@ -8,7 +8,7 @@
 [command_name [args...]]
 .fi
 .PP
-[command_string [args...]] | 
+[command_string [args...]] |
 .BR ./msh
 
 .SH DESCRIPTION
@@ -19,12 +19,12 @@ line string, or a specified file, and if it's present, executes it.
 .SH OPERANDS
 The interpreter supports the following operands:
 .TP
-.BR "command_name" 
+.BR "command_name"
 The string assigned to parameter zero, if
 .BR "command_name"
 is not found, the interpreter will display the correspondent error.
 .TP
-.BR arguments 
+.BR arguments
 Set for the positional arguments $1, $2, and so on, if present.
 
 .SH AUTHORS

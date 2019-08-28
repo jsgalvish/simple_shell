@@ -1,6 +1,16 @@
 #include "shell.h"
 
 /**
+ * ctrl_c - disables the process from getting terminated using SIGINT
+ * @sig: signal
+ *
+ * Return: void.
+ */
+void ctrl_c(int sig __attribute__ ((unused)))
+{
+}
+
+/**
  * _get_input - gets input from stdin.
  * @env: environment
  *
@@ -15,9 +25,8 @@ void _get_input(char *env[])
 
 	if (strtok(cbuffer, " \n\t\r"))
 	{
-		_validate(buffer, env);
-		free(buffer);
 		free(cbuffer);
+		_validate(buffer, env);
 		_get_input(env);
 	}
 	_get_input(env);
@@ -36,6 +45,7 @@ char *_next(void)
 
 	if (!isatty(fileno(stdin)))
 	{
+		signal(SIGINT, ctrl_c);
 		input = getline(&buffer, &bufsize, stdin);
 		if (input == EOF)
 		{
@@ -46,6 +56,7 @@ char *_next(void)
 	else
 	{
 		show_prompt();
+		signal(SIGINT, ctrl_c);
 		input = getline(&buffer, &bufsize, stdin);
 		if (input == EOF)
 		{
@@ -55,17 +66,6 @@ char *_next(void)
 	}
 
 	return (buffer);
-}
-
-/**
- * show_prompt - shows the prompt.
- *
- * Return: void.
- */
-void show_prompt(void)
-{
-	_putstr(GREEN "[._.] ");
-	_putstr(YELLOW ">> " RESET);
 }
 
 /**
@@ -80,15 +80,21 @@ void _validate(char *buffer, char *env[])
 	char **argv = NULL;
 
 	argv = _tokenize(buffer, " \n\t\r");
+	free(buffer);
 
 	if (argv[0][0] == 47)
 	{
 		if (access(argv[0], X_OK) == 0)
 			_execute(argv, env);
+		else
+		{
+			_putstr(argv[0]);
+			_putstr(": command not found\n");
+		}
 	}
 	else
 	{
-		if (check_for_builtins(argv[0], env) == NULL)
+		if (check_for_builtins(argv, env) == NULL)
 		{
 			if (check_path(argv, env))
 				_execute(argv, env);

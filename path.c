@@ -27,7 +27,6 @@ int check_path(char *argv[], char *env[])
 			_strcpy(check, routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
-			printf("%s\n", check);
 			if (stat(check, &buf) == 0)
 			{
 				free(argv[0]);
@@ -45,7 +44,7 @@ int check_path(char *argv[], char *env[])
 		free(check);
 	}
 	return (0);
-} 
+}
 /**
  * _path - checks for the environment variable PATH.
  * @env: environment
