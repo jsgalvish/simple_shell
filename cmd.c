@@ -95,7 +95,8 @@ void _validate(char *buffer, char *env[])
 			_putstr(": command not found\n");
 		}
 	}
-	free_double((void **) argv, ec((void **) argv));
+	free(argv);
+	//free_double((void **) argv, ec((void **) argv));
 }
 
 /**
@@ -127,4 +128,3 @@ void _execute(char *argv[], char *env[])
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
-
