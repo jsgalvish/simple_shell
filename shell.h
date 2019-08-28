@@ -34,6 +34,6 @@ int _strlen(char *s);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
 void signal_handle(int sig);
-
+int _strcmp(char *s1, char *s2);
 
 #endif
