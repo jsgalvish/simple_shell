@@ -8,9 +8,12 @@
  */
 void _get_input(char *env[])
 {
-	char *buffer = _next();
+	char *buffer = _next(), cbuffer = NULL;
 
-	if (strtok(buffer, " \n\t\r"))
+	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer));
+	_strcpy(cbuffer,buffer);
+
+	if (strtok(cbuffer, " \n\t\r"))
 	{
 		_validate(buffer, env);
 		free(buffer);
