@@ -17,6 +17,7 @@ void _get_input(char *env[])
 	{
 		_validate(buffer, env);
 		free(buffer);
+		free(cbuffer);
 		_get_input(env);
 	}
 	_get_input(env);
@@ -36,7 +37,7 @@ char *_next(void)
 	if (!isatty(fileno(stdin)))
 	{
 		input = getline(&buffer, &bufsize, stdin);
-		if (input == -1)
+		if (input == EOF)
 		{
 			free(buffer);
 			exit(EXIT_SUCCESS);
@@ -46,7 +47,7 @@ char *_next(void)
 	{
 		show_prompt();
 		input = getline(&buffer, &bufsize, stdin);
-		if (input == -1)
+		if (input == EOF)
 		{
 			free(buffer);
 			exit(EXIT_SUCCESS);
@@ -98,7 +99,7 @@ void _validate(char *buffer, char *env[])
 			}
 		}
 	}
-	free(argv);
+	free_double((void **) argv, ec((void **) argv));
 }
 
 /**

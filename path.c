@@ -10,27 +10,27 @@
  */
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), *check = NULL, *cpath = NULL;
+	char *path = _path(env), *check = NULL, *cpath = NULL, **routes = NULL;
 	struct stat buf;
 	int i = 0;
-	char **routes = NULL;
 
-	if (path != NULL)
+	if (path != NULL && *path)
 	{
 		cpath = malloc(sizeof(*cpath) * _strlen(path) + 1);
 		_strcpy(cpath, path);
 		routes = _tokenize(cpath, ":");
-
+		free(cpath);
 		check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
 				+ (sizeof(*check) * _strlen(argv[0]) + 2));
-
 		while (routes[i])
 		{
 			_strcpy(check, routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
+			printf("%s\n", check);
 			if (stat(check, &buf) == 0)
 			{
+				free(argv[0]);
 				argv[0] = check;
 				free_double((void **) routes, ec((void **) routes));
 				return (1);
@@ -41,11 +41,11 @@ int check_path(char *argv[], char *env[])
 				check = expand(check, sizeof(check), (sizeof(*check) * _strlen(routes[i]))
 						+ (sizeof(*check) * _strlen(argv[0]) + 2));
 		}
+		free_double((void **) routes, ec((void **) routes));
+		free(check);
 	}
-	free_double((void **) routes, ec((void **) routes));
 	return (0);
-}
-
+} 
 /**
  * _path - checks for the environment variable PATH.
  * @env: environment
