@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * check_path - checks if command is present in PATH.
+ * @argv: arguments
+ * @env: environment
+ *
+ * Return: if the command is found, the function will return 1. Else, the
+ * function will return 0.
+ */
 int check_path(char *argv[], char *env[])
 {
 	char *path = _path(env), *check = NULL, *cpath = NULL;
@@ -20,7 +28,7 @@ int check_path(char *argv[], char *env[])
 			_strcpy(check, routes[i]);
 			_strcat(check, "/");
 			_strcat(check, argv[0]);
-			if (stat(check, &buf ) == 0)
+			if (stat(check, &buf) == 0)
 			{
 				argv[0] = check;
 				return (1);
@@ -33,15 +41,21 @@ int check_path(char *argv[], char *env[])
 	return (0);
 }
 
+/**
+ * _path - checks for the environment variable PATH.
+ * @env: environment
+ *
+ * Return: pointer to the environment variable PATH, five steps forward.
+ */
 char *_path(char **env)
 {
 	int i = 0, j = 0;
 	char *path = "PATH=";
 
-	while(env[i])
+	while (env[i])
 	{
 		j = 0;
-		while(j < 5)
+		while (j < 5)
 		{
 			if (env[i][j] != path[j])
 				break;
