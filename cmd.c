@@ -29,7 +29,12 @@ void _get_input(char *env[])
 		_validate(buffer, env);
 		_get_input(env);
 	}
-	_get_input(env);
+	else
+	{
+		free(cbuffer);
+		free(buffer);
+		_get_input(env);
+	}
 }
 
 /**
