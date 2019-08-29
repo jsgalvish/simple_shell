@@ -13,13 +13,12 @@ void ctrl_c(int sig __attribute__ ((unused)))
 /**
  * _get_input - gets input from stdin.
  * @env: environment
- * @x_status: current status
  *
  * Return: void.
  */
-void _get_input(char *env[], int *x_status)
+void _get_input(char *env[])
 {
-	char *buffer = _next(x_status), *cbuffer = NULL;
+	char *buffer = _next(), *cbuffer = NULL;
 
 	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
 	_strcpy(cbuffer, buffer);
@@ -27,23 +26,23 @@ void _get_input(char *env[], int *x_status)
 	if (_strtok(cbuffer, " \n\t\r"))
 	{
 		free(cbuffer);
-		_validate(buffer, env, x_status);
-		_get_input(env, x_status);
+		_validate(buffer, env);
+		_get_input(env);
 	}
 	else
 	{
 		free(cbuffer);
 		free(buffer);
-		_get_input(env, x_status);
+		_get_input(env);
 	}
 }
 
 /**
  * _next - gets input through getline and returns the associated buffer
- * @x_status: current status
+ *
  * Return: void.
  */
-char *_next(int *x_status)
+char *_next(void)
 {
 	int input;
 	char *buffer = NULL;
@@ -55,7 +54,7 @@ char *_next(int *x_status)
 	if (input == EOF)
 	{
 		free(buffer);
-		*x_status = 127;
+		exit(EXIT_SUCCESS);
 	}
 
 	return (buffer);
@@ -65,35 +64,28 @@ char *_next(int *x_status)
  * _validate - validates input from _next
  * @buffer: buffer containing the command
  * @env: environment
- * @x_status: current status
+ *
  * Return: void.
  */
-void _validate(char *buffer, char *env[], int *x_status)
+void _validate(char *buffer, char *env[])
 {
 	char **argv = NULL;
 
 	argv = _tokenize(buffer, " \n\t\r");
 	free(buffer);
 
-	if (check_for_builtins(argv, env, x_status) == NULL)
+	if (check_for_builtins(argv, env) == NULL)
 	{
 		if (check_path(argv, env))
-		{
-			*x_status = 0;
 			_execute(argv, env);
-		}
 		else
 		{
-			if (access(argv[0], X_OK) == 0)
-			{
-				*x_status = 0;
+			if (access(argv[0], X_OK) == 0)	
 				_execute(argv, env);
-			}
 			else
 			{
 				_putstr(argv[0]);
 				_putstr(": command not found\n");
-				*x_status = 127;
 			}
 		}
 		free_double((void **) argv, ec((void **) argv));
@@ -104,7 +96,7 @@ void _validate(char *buffer, char *env[], int *x_status)
  * _execute - executes a command
  * @argv: arguments
  * @env: environment
- * @x_status: current status
+ *
  * Return: void.
  */
 void _execute(char *argv[], char *env[])
@@ -118,12 +110,10 @@ void _execute(char *argv[], char *env[])
 	{
 		if (execve(argv[0], argv, env) == -1)
 			perror("Could not execve");
-
 		exit(0);
 	}
 	else if (pid < 0)
 		perror("Could not execve");
-
 	else
 	{
 		do {

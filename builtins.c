@@ -1,12 +1,13 @@
  #include "shell.h"
+
 /**
  * check_for_builtins - checks if the command is a builtin
- * @a: arguments
- * @e: current enviroment
- * @x_s: current status
+ * @str: built for check
+ * @env: current enviroment
  * Return: pointer to the function or NULL
  */
-void (*check_for_builtins(char *a[], char *e[], int *x_s))(char *e[], int *x_s)
+
+void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
 {
 	int i;
 
@@ -18,13 +19,13 @@ void (*check_for_builtins(char *a[], char *e[], int *x_s))(char *e[], int *x_s)
 
 	for (i = 0; check[i].f != NULL; i++)
 	{
-		if (_strcmp(a[0], check[i].name) == 0)
+		if (_strcmp(argv[0], check[i].name) == 0)
 			break;
 	}
 	if (check[i].f != NULL)
 	{
-		free_double((void **) a, ec((void **) a));
-		check[i].f(e, x_s);
+		free_double((void **) argv, ec((void **) argv));
+		check[i].f(env);
 	}
 
 	return (check[i].f);
@@ -33,20 +34,21 @@ void (*check_for_builtins(char *a[], char *e[], int *x_s))(char *e[], int *x_s)
 /**
 * n_exit - exit shell
 * @env: current enviroment
-* @x_status: current status
 */
-void n_exit(char *env[] __attribute__((unused)),
-			int *x_status)
+
+void n_exit(char *env[])
 {
-	exit(*x_status);
+	if (env)
+
+	exit(0);
 }
 
 /**
 * _env - prints enviroment
 * @env: current enviroment
-* @x_status: current status
 */
-void _env(char *env[], int *x_status)
+
+void _env(char *env[])
 {
 	int i = 0;
 
@@ -56,6 +58,4 @@ void _env(char *env[], int *x_status)
 		_putstr("\n");
 		i++;
 	}
-
-	*x_status = 0;
 }
