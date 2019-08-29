@@ -28,6 +28,7 @@ void _execute(char *argv[], char *env[], int *x_status);
 int tc(char *str, char *delim);
 char **_tokenize(char *buffer, char *delimiter);
 char *_strtok(char *str, char *delim);
+char **_strfield(char *str, char delim);
 
 int _putstr(char *str);
 char *_strcpy(char *dest, char *src);
@@ -38,6 +39,9 @@ int _strcmp(char *s1, char *s2);
 
 char *_path(char **env);
 int check_path(char *argv[], char *env[]);
+char *cwd();
+char *absolute_path(char *path);
+int check_cwd(char *argv[]);
 
 int ec(void **ptr);
 

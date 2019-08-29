@@ -27,5 +27,18 @@ is not found, the interpreter will display the correspondent error.
 .BR arguments
 Set for the positional arguments $1, $2, and so on, if present.
 
+.SH NON-INTERACTIVE MODE
+.BR msh
+can be used in non-interactive mode for executing tasks outside the interpreter's
+environment. The command should be piped through a standard output tool, such as
+.BR "echo"(1):
+
+.TP
+.OP
+$
+.BR echo
+"ls -ltr" |
+.BR ./msh
+
 .SH AUTHORS
 Javier Cortés and Juan Galvis

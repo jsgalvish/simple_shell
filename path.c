@@ -16,6 +16,8 @@ int check_path(char *argv[], char *env[])
 
 	if (path != NULL && *path)
 	{
+		if (check_cwd(argv))
+			return (1);
 		routes = _tokenize(path, ": ");
 		check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
 				+ (sizeof(*check) * _strlen(argv[0]) + 2));
@@ -69,3 +71,44 @@ char *_path(char **env)
 	return (&env[i][j]);
 }
 
+char *cwd()
+{
+	char *cwd = NULL;
+
+	return (getcwd(cwd, 0));
+}
+
+char *absolute_path(char *path)
+{
+	char *wd = cwd();
+	char *ab_path = malloc((sizeof(*ab_path) * _strlen(wd)) +
+			(sizeof(*ab_path) * _strlen(path)) + 2);
+
+	_strcpy(ab_path, wd);
+	_strcat(ab_path, "/");
+	_strcat(ab_path, path);
+
+	free(wd);
+	return (ab_path);
+}
+
+int check_cwd(char *argv[])
+{
+	char *check = NULL;
+	struct stat buf;
+
+	if (argv[0][0] == '.' && argv[0][1] == '/')
+	{
+		check =	absolute_path(&argv[0][2]);
+		if (stat(check, &buf) == 0)
+		{
+			free(argv[0]);
+			argv[0] = check;
+			return (1);
+		}
+		else
+			return (0);
+	}
+	else
+		return (0);
+}

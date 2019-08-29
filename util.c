@@ -22,6 +22,28 @@ int tc(char *str, char *delim)
 	return (c);
 }
 
+/*
+ * fc - Returns the field count of a string, each one enclosed by a
+ * specified delimiter.
+ * @str: provided string
+ * @delim: charset for delimiters
+ *
+ * Return: field count of the string.
+ */
+int fc(char *str, char delim)
+{
+	int i, c;
+
+	if (!str)
+		return (0);
+
+	for (i = 0, c = 0; str[i]; i++)
+		if (str[i] == delim)
+			c++;
+
+	return (c);
+}
+
 /**
  * _tokenize - tokenizes a string
  * @buffer: string
@@ -106,4 +128,56 @@ char *_strtok(char *str, char *delim)
 	}
 	token = NULL;
 	return (token);
+}
+
+/**
+ * _strfield - Returns an array of fields from a string.
+ * @str: provided string
+ * @delim: delimiter
+ *
+ * Return: array with every field from the string, NULL terminated
+ * and separated through a delimeter.
+ */
+char **_strfield(char *str, char delim)
+{
+	int i = 0, j = 0, k = 0, l = 0, len = 0;
+	char **list;
+	int pos = 0;
+
+	if (!str || !fc(str, delim))
+		return (NULL);
+
+	list = malloc(sizeof(char *) * fc(str, delim) + 8);
+	if (!list)
+	{
+		free(list);
+		return (NULL);
+	}
+	if (str[0] == delim)
+	{
+		list[0] = malloc(1);
+		_strcpy(list[0], "");
+		l++;
+	}
+
+	for (i = pos; str[i];)
+	{
+		if (str[i] == delim && str[i + 1])
+		{
+			k = 0;
+			len = 0;
+			i++;
+			j = i;
+			for (; str[i] != delim && str[i] != 0; i++)
+				len++;
+			list[l] = malloc(i + 1);
+			for (; k < len ; j++, k++)
+				list[l][k] = str[j];
+			list[l][k] = 0;
+			l++;
+		}
+		else
+			i++;
+	}
+	return (list);
 }
