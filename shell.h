@@ -23,7 +23,7 @@ void _get_input(char *env[], int *x_status);
 char *_next(int *x_status);
 void show_prompt(void);
 void _validate(char *buffer, char *env[], int *x_status);
-void _execute(char *argv[], char *env[], int *x_status);
+void _execute(char *argv[], char *env[]);
 
 int tc(char *str, char *delim);
 char **_tokenize(char *buffer, char *delimiter);
