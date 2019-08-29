@@ -11,9 +11,7 @@
 int main(int argc __attribute__((unused)),
 		char **argv __attribute__((unused)), char **environment)
 {
-	int x_status = 0;
-
-	_get_input(environment, &x_status);
+	_get_input(environment);
 
 	return (0);
 }

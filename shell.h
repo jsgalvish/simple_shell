@@ -16,14 +16,14 @@
 typedef struct builtins
 {
 	char *name;
-	void (*f)(char *env[], int *x_status);
+	void (*f)(char *env[]);
 } builtins_t;
 
-void _get_input(char *env[], int *x_status);
+void _get_input(char *env[]);
 char *_next(void);
 void show_prompt(void);
-void _validate(char *buffer, char *env[], int *x_status);
-void _execute(char *argv[], char *env[], int *x_status);
+void _validate(char *buffer, char *env[]);
+void _execute(char *argv[], char *env[]);
 
 int tc(char *str, char *delim);
 char **_tokenize(char *buffer, char *delimiter);
@@ -50,8 +50,8 @@ void free_double(void **ptr, int i);
 void *expand(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_memcpy(char *dest, char *src, unsigned int n);
 
-void (*check_for_builtins(char **ar, char *en[], int *x))(char *en[], int *x);
-void n_exit(char *env[], int *x_status);
-void _env(char *env[], int *x_status);
+void (*check_for_builtins(char **argv, char *env[]))(char *env[]);
+void n_exit(char *env[]);
+void _env(char *env[]);
 
 #endif
