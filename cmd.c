@@ -80,14 +80,14 @@ void _validate(char *buffer, char *env[], int *x_status)
 		if (check_path(argv, env))
 		{
 			*x_status = 0;
-			_execute(argv, env);
+			_execute(argv, env, x_status);
 		}
 		else
 		{
 			if (access(argv[0], X_OK) == 0)
 			{
 				*x_status = 0;
-				_execute(argv, env);
+				_execute(argv, env, x_status);
 			}
 			else
 			{
@@ -107,7 +107,7 @@ void _validate(char *buffer, char *env[], int *x_status)
  * @x_status: current status
  * Return: void.
  */
-void _execute(char *argv[], char *env[])
+void _execute(char *argv[], char *env[], int *x_status)
 {
 	int status;
 	pid_t pid;
@@ -129,5 +129,6 @@ void _execute(char *argv[], char *env[])
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		*x_status = WEXITSTATUS(status);
 	}
 }
