@@ -2,12 +2,13 @@
 
 /**
  * check_for_builtins - checks if the command is a builtin
- * @str: built for check
- * @env: current enviroment
+ * @ar: built for check
+ * @en: current enviroment
+ * @x: current status
  * Return: pointer to the function or NULL
  */
 
-void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
+void (*check_for_builtins(char *ar[], char *en[], int *x))(char *en[], int *x)
 {
 	int i;
 
@@ -19,13 +20,13 @@ void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
 
 	for (i = 0; check[i].f != NULL; i++)
 	{
-		if (_strcmp(argv[0], check[i].name) == 0)
+		if (_strcmp(ar[0], check[i].name) == 0)
 			break;
 	}
 	if (check[i].f != NULL)
 	{
-		free_double((void **) argv, ec((void **) argv));
-		check[i].f(env);
+		free_double((void **) ar, ec((void **) ar));
+		check[i].f(en, x);
 	}
 
 	return (check[i].f);
@@ -34,21 +35,21 @@ void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
 /**
 * n_exit - exit shell
 * @env: current enviroment
+* @x_status: current status
 */
 
-void n_exit(char *env[])
+void n_exit(char *env[] __attribute__((unused)),  int *x_status)
 {
-	if (env)
-
-	exit(0);
+	exit(*x_status);
 }
 
 /**
 * _env - prints enviroment
 * @env: current enviroment
+* @x_status: current status
 */
 
-void _env(char *env[])
+void _env(char *env[], int *x_status)
 {
 	int i = 0;
 
@@ -58,4 +59,5 @@ void _env(char *env[])
 		_putstr("\n");
 		i++;
 	}
+	 *x_status = 0;
 }

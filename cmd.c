@@ -13,10 +13,10 @@ void ctrl_c(int sig __attribute__ ((unused)))
 /**
  * _get_input - gets input from stdin.
  * @env: environment
- *
+ * @x_status: current status
  * Return: void.
  */
-void _get_input(char *env[])
+void _get_input(char *env[], int *x_status)
 {
 	char *buffer = _next(), *cbuffer = NULL;
 
@@ -26,14 +26,14 @@ void _get_input(char *env[])
 	if (_strtok(cbuffer, " \n\t\r"))
 	{
 		free(cbuffer);
-		_validate(buffer, env);
-		_get_input(env);
+		_validate(buffer, env, x_status);
+		_get_input(env, x_status);
 	}
 	else
 	{
 		free(cbuffer);
 		free(buffer);
-		_get_input(env);
+		_get_input(env, x_status);
 	}
 }
 
@@ -54,7 +54,7 @@ char *_next(void)
 	if (input == EOF)
 	{
 		free(buffer);
-		exit(EXIT_SUCCESS);
+		exit(127);
 	}
 
 	return (buffer);
@@ -64,28 +64,29 @@ char *_next(void)
  * _validate - validates input from _next
  * @buffer: buffer containing the command
  * @env: environment
- *
+ * @x_status: current status
  * Return: void.
  */
-void _validate(char *buffer, char *env[])
+void _validate(char *buffer, char *env[], int *x_status)
 {
 	char **argv = NULL;
 
 	argv = _tokenize(buffer, " \n\t\r");
 	free(buffer);
 
-	if (check_for_builtins(argv, env) == NULL)
+	if (check_for_builtins(argv, env, x_status) == NULL)
 	{
 		if (check_path(argv, env))
-			_execute(argv, env);
+			_execute(argv, env, x_status);
 		else
 		{
-			if (access(argv[0], X_OK) == 0)	
-				_execute(argv, env);
+			if (access(argv[0], X_OK) == 0)
+				_execute(argv, env, x_status);
 			else
 			{
 				_putstr(argv[0]);
 				_putstr(": command not found\n");
+				*x_status = 127;
 			}
 		}
 		free_double((void **) argv, ec((void **) argv));
@@ -96,10 +97,10 @@ void _validate(char *buffer, char *env[])
  * _execute - executes a command
  * @argv: arguments
  * @env: environment
- *
+ * @x_status: current status
  * Return: void.
  */
-void _execute(char *argv[], char *env[])
+void _execute(char *argv[], char *env[], int *x_status)
 {
 	int status;
 	pid_t pid;
@@ -119,5 +120,6 @@ void _execute(char *argv[], char *env[])
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		*x_status = WEXITSTATUS(status);
 	}
 }
