@@ -10,16 +10,13 @@
  */
 int check_path(char *argv[], char *env[])
 {
-	char *path = _path(env), *check = NULL, *cpath = NULL, **routes = NULL;
+	char *path = _path(env), *check = NULL, **routes = NULL;
 	struct stat buf;
 	int i = 0;
 
 	if (path != NULL && *path)
 	{
-		cpath = malloc(sizeof(*cpath) * _strlen(path) + 1);
-		_strcpy(cpath, path);
-		routes = _tokenize(cpath, ":");
-		free(cpath);
+		routes = _tokenize(path, ": ");
 		check = expand(check, 0, (sizeof(*check) * _strlen(routes[i]))
 				+ (sizeof(*check) * _strlen(argv[0]) + 2));
 		while (routes[i])

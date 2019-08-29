@@ -23,7 +23,7 @@ void _get_input(char *env[])
 	cbuffer = malloc(sizeof(*cbuffer) * _strlen(buffer) + 1);
 	_strcpy(cbuffer, buffer);
 
-	if (strtok(cbuffer, " \n\t\r"))
+	if (_strtok(cbuffer, " \n\t\r"))
 	{
 		free(cbuffer);
 		_validate(buffer, env);

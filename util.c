@@ -12,6 +12,9 @@ int tc(char *str, char *delim)
 {
 	int i, c;
 
+	if (!str)
+		return (0);
+
 	for (i = 0, c = 0; str[i]; i++)
 		if (!charcmp(str[i], delim) && (charcmp(str[i + 1], delim) || !str[i + 1]))
 			c++;
@@ -37,12 +40,12 @@ char **_tokenize(char *buffer, char *delimiter)
 
 	store_tokens = malloc(sizeof(char *) * tc(buffer, delimiter) + 8);
 
-	token = strtok(cbuffer, delimiter);
+	token = _strtok(cbuffer, delimiter);
 
 	store_tokens[i] = malloc(sizeof(*token) * _strlen(token) + 1);
 	_strcpy(store_tokens[i], token);
 
-	while ((token = strtok(NULL, delimiter)))
+	while ((token = _strtok(NULL, delimiter)))
 	{
 		store_tokens[++i] = malloc(sizeof(*token) * _strlen(token) + 1);
 		_strcpy(store_tokens[i], token);
@@ -65,19 +68,24 @@ char **_tokenize(char *buffer, char *delimiter)
 char *_strtok(char *str, char *delim)
 {
 	int i, len;
-	static char *token;
-	static char *cpy;
-	static int pos;
+	static char *token, *cpy;
+	static int pos, slen;
 
+	if (str && !tc(str, delim))
+		return (NULL);
 	if (!str && !cpy)
 		return (NULL);
-
 	if (str && cpy)
 		pos = 0;
-
-	if (!cpy || !token)
+	if (str && (str != cpy))
 	{
 		cpy = str;
+		slen = _strlen(cpy);
+	}
+	if ((!cpy || !token) && str)
+	{
+		cpy = str;
+		slen = _strlen(cpy);
 		pos = 0;
 	}
 
@@ -89,7 +97,10 @@ char *_strtok(char *str, char *delim)
 		{
 			token = &cpy[(i + 1) - len];
 			token[len] = 0;
-			pos = i + 2;
+			if (i + 1 == slen)
+				pos = i + 1;
+			else
+				pos = i + 2;
 			return (token);
 		}
 	}
