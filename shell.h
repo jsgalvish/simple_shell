@@ -13,11 +13,17 @@
 #define YELLOW "\x1B[33m"
 #define RESET "\x1B[0m"
 
-typedef struct builtins
+/**
+ * struct builtin - shell builtin
+ * @name: builtin name
+ * @f: function associated with the builtin
+ *
+ */
+typedef struct builtin
 {
 	char *name;
 	void (*f)(char *env[]);
-} builtins_t;
+} builtin_t;
 
 void _get_input(char *env[]);
 char *_next(void);

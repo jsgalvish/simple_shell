@@ -71,6 +71,11 @@ char *_path(char **env)
 	return (&env[i][j]);
 }
 
+/**
+ * cwd - current working diretory
+ *
+ * Return - char * containing the absolute current working directory
+ */
 char *cwd()
 {
 	char *cwd = NULL;
@@ -78,6 +83,12 @@ char *cwd()
 	return (getcwd(cwd, 0));
 }
 
+/**
+ * absolute_path - get absolute path using the current working directory.
+ * @path: path to the executable
+ *
+ * Return - generated absolute path
+ */
 char *absolute_path(char *path)
 {
 	char *wd = cwd();
@@ -92,6 +103,13 @@ char *absolute_path(char *path)
 	return (ab_path);
 }
 
+/**
+ * check_cwd - checks if path from absolute current working directory exits.
+ * @argv: arguments
+ *
+ * Return: if path exists, the function will return 1, else, the function
+ * will return 0.
+ */
 int check_cwd(char *argv[])
 {
 	char *check = NULL;
