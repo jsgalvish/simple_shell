@@ -11,7 +11,7 @@ void (*check_for_builtins(char *argv[], char *env[]))(char *env[])
 {
 	int i;
 
-	builtins_t check[] = {
+	builtin_t check[] = {
 		{"exit", n_exit},
 		{"env", _env},
 		{NULL, NULL}
