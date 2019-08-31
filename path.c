@@ -74,7 +74,7 @@ char *_path(char **env)
 /**
  * cwd - current working diretory
  *
- * Return - char * containing the absolute current working directory
+ * Return: char * containing the absolute current working directory
  */
 char *cwd()
 {
@@ -87,7 +87,7 @@ char *cwd()
  * absolute_path - get absolute path using the current working directory.
  * @path: path to the executable
  *
- * Return - generated absolute path
+ * Return: generated absolute path
  */
 char *absolute_path(char *path)
 {

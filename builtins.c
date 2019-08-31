@@ -2,7 +2,7 @@
 
 /**
  * check_for_builtins - checks if the command is a builtin
- * @str: built for check
+ * @argv: arguments
  * @env: current enviroment
  * Return: pointer to the function or NULL
  */

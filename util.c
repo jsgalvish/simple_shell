@@ -22,7 +22,7 @@ int tc(char *str, char *delim)
 	return (c);
 }
 
-/*
+/**
  * fc - Returns the field count of a string, each one enclosed by a
  * specified delimiter.
  * @str: provided string
